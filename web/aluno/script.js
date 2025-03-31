@@ -24,4 +24,5 @@ cadastro.addEventListener("submit", (e) => {
         },
         body: JSON.stringify(dados)
     })
+    .then((res) => res.json())
 });
