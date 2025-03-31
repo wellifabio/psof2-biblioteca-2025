@@ -17,12 +17,17 @@ cadastro.addEventListener("submit", (e) => {
         nome: cadastro.nome.value,
         telefone: cadastro.telefone.value,
     }
-    fetch(url+"/aluno", {
-        method: "POST",
-        header:{
-            "Content-Type": "application/json"
-        },
+    fetch(url + "/alunos", {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
         body: JSON.stringify(dados)
     })
-    .then((res) => res.json())
+    .then((res) => res.status)
+    .then((status)=>{
+        if(status == 201){
+            window.location.reload();
+        }else{
+            alert("Erro ao enviar dados para a API!");
+        }
+    })
 });
