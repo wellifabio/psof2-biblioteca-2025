@@ -1,5 +1,9 @@
 url = "http://localhost:3001";
 
+//Objetos tipo formulário do DOM
+const detalhes = document.querySelector("#detalhes form");
+const cadastro = document.querySelector("#cadastro form");
+
 //Obter títulos da API
 fetch(url)
     .then((res) => res.json())
@@ -9,7 +13,6 @@ fetch(url)
     })
 
 //Enviar dados de cadastro para a API
-const cadastro = document.querySelector("#cadastro form");
 cadastro.addEventListener("submit", (e) => {
     e.preventDefault();
     const dados = {
@@ -53,13 +56,53 @@ fetch(url + "/alunos")
         });
     });
 
+//Preencher o formulário de detalhes com os dados do aluno
 function showDetalhes(ra) {
-    const detalhes = document.querySelector("#detalhes form");
     fetch(url + '/alunos/' + ra)
         .then((res) => res.json())
         .then((dados) => {
             detalhes.ra.value = dados[0].ra;
             detalhes.nome.value = dados[0].nome;
             detalhes.telefone.value = dados[0].telefone;
+        });
+}
+
+//Alterar os dados do aluno na API
+detalhes.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const dados = {
+        ra: detalhes.ra.value,
+        nome: detalhes.nome.value,
+        telefone: detalhes.telefone.value,
+    }
+    fetch(url + "/alunos/" + dados.ra, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(dados)
+    })
+        .then((res) => res.status)
+        .then((status) => {
+            if (status == 202) {
+                window.location.reload();
+            } else {
+                alert("Erro ao enviar dados para a API!");
+            }
+        });
+});
+
+//Deletar aluno da API
+function excluir() {
+    const ra = detalhes.ra.value;
+    fetch(url + "/alunos/" + ra, {
+        method: 'DELETE',
+        headers: { 'Content-Type': 'application/json' },
+    })
+        .then((res) => res.status)
+        .then((status) => {
+            if (status == 204) {
+                window.location.reload();
+            } else {
+                alert("Erro ao enviar dados para a API!");
+            }
         });
 }
