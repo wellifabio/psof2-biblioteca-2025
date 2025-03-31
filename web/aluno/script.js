@@ -29,5 +29,22 @@ cadastro.addEventListener("submit", (e) => {
         }else{
             alert("Erro ao enviar dados para a API!");
         }
-    })
+    });
 });
+
+//Obter lista de alunos da API
+fetch(url + "/alunos")
+    .then((res) => res.json())
+    .then((dados) => {
+        const corpo = document.querySelector("main tbody");
+        dados.forEach((aluno) => {
+            const tr = document.createElement("tr");
+            tr.innerHTML = `
+                <td data-label="RA">${aluno.ra}</td>
+                <td data-label="Nome">${aluno.nome}</td>
+                <td data-label="Telefone">${aluno.telefone}</td>
+                <td data-label="Detelhes"><button>Detalhes</button></td>
+            `;
+            corpo.appendChild(tr);
+        });
+    });
