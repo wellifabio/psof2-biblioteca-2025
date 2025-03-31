@@ -3,7 +3,6 @@ url = "http://localhost:3001";
 //Objetos tipo formulário do DOM
 const detalhes = document.querySelector("#detalhes form");
 const cadastro = document.querySelector("#cadastro form");
-const emprestimos = document.querySelector("#detalhes tbody");
 
 //Obter títulos da API
 fetch(url)
@@ -17,11 +16,10 @@ fetch(url)
 cadastro.addEventListener("submit", (e) => {
     e.preventDefault();
     const dados = {
-        ra: cadastro.ra.value,
-        nome: cadastro.nome.value,
-        telefone: cadastro.telefone.value,
+        alunoRa: cadastro.alunoRa.value,
+        livroId: Number(cadastro.livroId.value)
     }
-    fetch(url + "/alunos", {
+    fetch(url + "/emprestimos", {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(dados)
@@ -36,19 +34,22 @@ cadastro.addEventListener("submit", (e) => {
         });
 });
 
-//Obter lista de alunos da API
-fetch(url + "/alunos")
+//Obter lista de emprestimos da API
+fetch(url + "/emprestimos")
     .then((res) => res.json())
     .then((dados) => {
         const corpo = document.querySelector("main tbody");
-        dados.forEach((aluno) => {
+        dados.forEach((emp) => {
             const tr = document.createElement("tr");
             tr.innerHTML = `
-                <td data-label="RA">${aluno.ra}</td>
-                <td data-label="Nome">${aluno.nome}</td>
-                <td data-label="Telefone">${aluno.telefone}</td>
+                <td data-label="Id">${emp.id}</td>
+                <td data-label="RA">${emp.alunoRa}</td>
+                <td data-label="Telefone">${emp.livroId}</td>
+                <td data-label="Retirada">${new Date(emp.retirada).toLocaleDateString('pt-br')}</td>
+                <td data-label="Devolução">${emp.devolucao != null ? new Date(emp.devolucao).toLocaleDateString('pt-br') : "Emprestado"}</td>
+                <td data-label="Multa">${emp.multa}</td>
                 <td data-label="Detelhes">
-                    <button onclick="showDetalhes('${aluno.ra}')">
+                    <button onclick="showDetalhes('${emp.id}')">
                         Detalhes
                     </button>
                 </td>
@@ -57,38 +58,35 @@ fetch(url + "/alunos")
         });
     });
 
-//Preencher o formulário de detalhes com os dados do aluno
+//Preencher o formulário de detalhes com os dados do emprestimo
 function showDetalhes(ra) {
-    fetch(url + '/alunos/' + ra)
+    fetch(url + '/emprestimos/' + ra)
         .then((res) => res.json())
         .then((dados) => {
-            detalhes.ra.value = dados[0].ra;
-            detalhes.nome.value = dados[0].nome;
-            detalhes.telefone.value = dados[0].telefone;
-            emprestimos.innerHTML = "";
-            dados[0].emprestimos.forEach((emp) => {
-                const tr = document.createElement("tr");
-                tr.innerHTML = `
-                    <td data-label="ID">${emp.id}</td>
-                    <td data-label="Data">${emp.livro.titulo}</td>
-                    <td data-label="Livro">${emp.livro.autor}</td>
-                    <td data-label="Devolução">${new Date(emp.retirada).toLocaleDateString('pt-br')}</td>
-                    <td data-label="Devolução">${emp.devolucao != null?new Date(emp.devolucao).toLocaleDateString('pt-br'):"Emprestado"}</td>
-                `;
-                emprestimos.appendChild(tr);
-            });
+            detalhes.id.value = dados[0].id;
+            detalhes.alunoRa.value = dados[0].alunoRa;
+            detalhes.livroId.value = dados[0].livroId;
+            detalhes.retirada.value = dados[0].retirada.split('T')[0] + ' ' + dados[0].retirada.split('T')[1].substring(0, 5);
+            detalhes.devolucao.value = dados[0].devolucao != null ? dados[0].devolucao.split('T')[0] + ' ' + dados[0].devolucao.split('T')[1].substring(0, 5) : "";
+            detalhes.multa.value = dados[0].multa == null ? 0 : dados[0].multa;
         });
 }
 
-//Alterar os dados do aluno na API
+//Alterar os dados do emprestimo na API
 detalhes.addEventListener("submit", (e) => {
     e.preventDefault();
     const dados = {
-        ra: detalhes.ra.value,
-        nome: detalhes.nome.value,
-        telefone: detalhes.telefone.value,
+        alunoRa: detalhes.alunoRa.value,
+        livroId: detalhes.livroId.value,
+        // retirada: detalhes.retirada.value
     }
-    fetch(url + "/alunos/" + dados.ra, {
+    // if (detalhes.devolucao.value != "") {
+    //     dados.devolucao = detalhes.devolucao.value;
+    // }
+    // if (detalhes.multa.value != 0) {
+    //     dados.multa = detalhes.multa.value;
+    // }
+    fetch(url + "/emprestimos/" + detalhes.id.value, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(dados)
@@ -103,10 +101,10 @@ detalhes.addEventListener("submit", (e) => {
         });
 });
 
-//Deletar aluno da API
+//Deletar emprestimo da API
 function excluir() {
-    const ra = detalhes.ra.value;
-    fetch(url + "/alunos/" + ra, {
+    const id = detalhes.id.value;
+    fetch(url + "/emprestimos/" + id, {
         method: 'DELETE',
         headers: { 'Content-Type': 'application/json' },
     })
