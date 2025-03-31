@@ -15,7 +15,7 @@ routes.get('/alunos/:ra', Aluno.readOne);
 routes.patch('/alunos/:ra', Aluno.update);
 routes.delete('/alunos/:ra', Aluno.remove);
 
-routes.post('/livros', Aluno.create);
+routes.post('/livros', Livro.create);
 routes.get('/livros', Livro.read);
 routes.get('/livros/:id', Livro.readOne);
 routes.patch('/livros/:id', Livro.update);
