@@ -43,8 +43,16 @@ fetch(url + "/alunos")
                 <td data-label="RA">${aluno.ra}</td>
                 <td data-label="Nome">${aluno.nome}</td>
                 <td data-label="Telefone">${aluno.telefone}</td>
-                <td data-label="Detelhes"><button>Detalhes</button></td>
+                <td data-label="Detelhes">
+                    <button onclick="showDetalhes('${aluno.ra}')">
+                        Detalhes
+                    </button>
+                </td>
             `;
             corpo.appendChild(tr);
         });
     });
+
+function showDetalhes(ra){
+    alert(ra)
+}
