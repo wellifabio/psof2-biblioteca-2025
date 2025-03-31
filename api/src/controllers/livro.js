@@ -6,6 +6,7 @@ const create = async (req, res) => {
         const livro = await prisma.livro.create({
             data: req.body
         });
+        res.status(201).json(livro).end()
     } catch (e) {
         res.status(400).json(e).end()
     }
@@ -36,6 +37,7 @@ const update = async (req, res) => {
             data: req.body,
             where: { id: Number(req.params.id) }
         });
+        res.status(202).json(livro).end()
     } catch (e) {
         res.status(400).json(e).end()
     }
@@ -45,6 +47,7 @@ const remove = async (req, res) => {
         const livro = await prisma.livro.delete({
             where: { id: Number(req.params.id) }
         });
+        res.status(204).json(livro).end()
     } catch (e) {
         res.status(400).json(e).end()
     }

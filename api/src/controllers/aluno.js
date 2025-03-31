@@ -6,6 +6,7 @@ const create = async (req, res) => {
         const aluno = await prisma.aluno.create({
             data: req.body
         });
+        res.status(201).json(aluno).end()
     } catch (e) {
         res.status(400).json(e).end()
     }
@@ -36,6 +37,7 @@ const update = async (req, res) => {
             data: req.body,
             where: { ra: req.params.ra }
         });
+        res.status(202).json(aluno).end()
     } catch (e) {
         res.status(400).json(e).end()
     }
@@ -45,6 +47,7 @@ const remove = async (req, res) => {
         const aluno = await prisma.aluno.delete({
             where: { ra: req.params.ra }
         });
+        res.status(204).json(aluno).end()
     } catch (e) {
         res.status(400).json(e).end()
     }

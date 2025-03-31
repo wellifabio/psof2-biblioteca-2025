@@ -6,6 +6,7 @@ const create = async (req, res) => {
         const emprestimo = await prisma.emprestimo.create({
             data: req.body
         });
+        res.status(201).json(emprestimo).end()
     } catch (e) {
         res.status(400).json(e).end()
     }
@@ -33,6 +34,7 @@ const update = async (req, res) => {
             data: req.body,
             where: { id: Number(req.params.id) }
         });
+        res.status(202).json(emprestimo).end()
     } catch (e) {
         res.status(400).json(e).end()
     }
@@ -42,6 +44,7 @@ const remove = async (req, res) => {
         const emprestimo = await prisma.emprestimo.delete({
             where: { id: Number(req.params.id) }
         });
+        res.status(204).json(emprestimo).end()
     } catch (e) {
         res.status(400).json(e).end()
     }
