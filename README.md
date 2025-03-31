@@ -3,8 +3,6 @@ Situação de Aprendizagem - Back-End (Node.JS, JavaSript, VsCode, ORM Prisma, I
 ## Contextualização
 A BIBLIOTECA ACME é a biblioteca da escola ACME, é nossa cliente e necessita de um sistema Web para registro dos empréstimos de livros.<br>O P.O. após uma visita ao cliente, elaborou o DER e UML DC(Diagrama de Classes) a seguir e elencou os requisitos funcionais.<br>
 ![DER e DC](./docs/der-dc.png)
-## Desafio
-Desenvolver as funcionalidades conforme requisitos
 
 ### Requisitos funcionais
 - [RF001] O sistema deve permitir o CRUD de alunos.
@@ -27,5 +25,28 @@ Desenvolver as funcionalidades conforme requisitos
 - [CT005] Altere pelo menos dois emprestimos preenchendo a **devolucao** com data 4 dias maior que a retirada para testar o cálculo da **multa**.
 
 ## Tecnologias
+- Node.js
+- VsCode
+- Insomnia
+- MySQL - XAMPP
+- HTML
+- CSS
+- JavaScript (Vanilla)
 
 ## Passo a Passo de como executar a API
+- 1 Clone este repositório
+- 2 Abra o XAMPP e de start em MySQL (Confira se não possui um banco de dados chamado biblioteca, caso possua precisará excluir)
+- 3 Abra a paste do repositório clonado com  VsCode
+- 4 Crie o arquivo **.env** na pasta ./api contendo:
+```js
+DATABASE_URL="mysql://root@localhost:3306/biblioteca?shcema=public&timezone=UTC"
+```
+- 5 Abra um terminal **cmd** do VsCode "CTRL + '" e digite:
+```cmd
+cd api
+npm install
+npx prisma migrate dev --name init
+npx nodemon
+## ou
+npm start
+```
