@@ -19,17 +19,17 @@ cadastro.addEventListener("submit", (e) => {
     }
     fetch(url + "/alunos", {
         method: 'POST',
-        headers: {'Content-Type': 'application/json'},
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(dados)
     })
-    .then((res) => res.status)
-    .then((status)=>{
-        if(status == 201){
-            window.location.reload();
-        }else{
-            alert("Erro ao enviar dados para a API!");
-        }
-    });
+        .then((res) => res.status)
+        .then((status) => {
+            if (status == 201) {
+                window.location.reload();
+            } else {
+                alert("Erro ao enviar dados para a API!");
+            }
+        });
 });
 
 //Obter lista de alunos da API
@@ -53,6 +53,13 @@ fetch(url + "/alunos")
         });
     });
 
-function showDetalhes(ra){
-    alert(ra)
+function showDetalhes(ra) {
+    const detalhes = document.querySelector("#detalhes form");
+    fetch(url + '/alunos/' + ra)
+        .then((res) => res.json())
+        .then((dados) => {
+            detalhes.ra.value = dados[0].ra;
+            detalhes.nome.value = dados[0].nome;
+            detalhes.telefone.value = dados[0].telefone;
+        });
 }
