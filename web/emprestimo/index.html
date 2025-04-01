@@ -34,8 +34,8 @@
                     <th>Id</th>
                     <th>Aluno RA</th>
                     <th>Livro ID</th>
-                    <th>Retirada</th>
-                    <th>Devolução</th>
+                    <th colspan="2">Retirada</th>
+                    <th colspan="2">Devolução</th>
                     <th>Multa</th>
                 </tr>
             </thead>
@@ -51,7 +51,7 @@
                 <button>X</button>
             </div>
             <form>
-                <input type="text" placeholder="Id" name="id" disabled>
+                <input type="number" placeholder="Id" name="id" disabled>
                 <input type="text" placeholder="RA do Aluno" name="alunoRa" required>
                 <input type="number" placeholder="Id do Livro" name="livroId" required>
                 <input type="datetime-local" placeholder="Retirada" name="retirada" required>

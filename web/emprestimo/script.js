@@ -45,8 +45,10 @@ fetch(url + "/emprestimos")
                 <td data-label="Id">${emp.id}</td>
                 <td data-label="RA">${emp.alunoRa}</td>
                 <td data-label="Telefone">${emp.livroId}</td>
-                <td data-label="Retirada">${new Date(emp.retirada).toLocaleDateString('pt-br')}</td>
-                <td data-label="Devolução">${emp.devolucao != null ? new Date(emp.devolucao).toLocaleDateString('pt-br') : "Emprestado"}</td>
+                <td data-label="Data retirada">${new Date(emp.retirada).toLocaleDateString('pt-br')}</td>
+                <td data-label="Hora retirada">${new Date(emp.retirada).toLocaleTimeString('pt-br')}</td>
+                <td data-label="Data devolução">${emp.devolucao != null ? new Date(emp.devolucao).toLocaleDateString('pt-br') : "Emprestado"}</td>
+                <td data-label="Hora devolução">${emp.devolucao != null ? new Date(emp.devolucao).toLocaleTimeString('pt-br') : "Emprestado"}</td>
                 <td data-label="Multa">${emp.multa}</td>
                 <td data-label="Detelhes">
                     <button onclick="showDetalhes('${emp.id}')">
@@ -77,15 +79,15 @@ detalhes.addEventListener("submit", (e) => {
     e.preventDefault();
     const dados = {
         alunoRa: detalhes.alunoRa.value,
-        livroId: detalhes.livroId.value,
-        // retirada: detalhes.retirada.value
+        livroId: Number(detalhes.livroId.value),
+        retirada: new Date(detalhes.retirada.value)
     }
-    // if (detalhes.devolucao.value != "") {
-    //     dados.devolucao = detalhes.devolucao.value;
-    // }
-    // if (detalhes.multa.value != 0) {
-    //     dados.multa = detalhes.multa.value;
-    // }
+    if (detalhes.devolucao.value != "") {
+        dados.devolucao = new Date(detalhes.devolucao.value);
+    }
+    if (detalhes.multa.value != 0) {
+        dados.multa = Number(detalhes.multa.value);
+    }
     fetch(url + "/emprestimos/" + detalhes.id.value, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
