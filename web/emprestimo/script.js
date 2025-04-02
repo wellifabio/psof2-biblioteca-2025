@@ -71,6 +71,8 @@ function showDetalhes(ra) {
             detalhes.retirada.value = dados[0].retirada.split('T')[0] + ' ' + dados[0].retirada.split('T')[1].substring(0, 5);
             detalhes.devolucao.value = dados[0].devolucao != null ? dados[0].devolucao.split('T')[0] + ' ' + dados[0].devolucao.split('T')[1].substring(0, 5) : "";
             detalhes.multa.value = dados[0].multa == null ? 0 : dados[0].multa;
+            detalhes.aluno.value = dados[0].aluno.nome;
+            detalhes.livro.value = dados[0].livro.titulo;
         });
 }
 

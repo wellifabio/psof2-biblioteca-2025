@@ -23,6 +23,14 @@
     </section>
     <header>
         <h1>Aguardando resposta da API</h1>
+        <nav>
+            <ul>
+                <li><a href="../livro">Livros</a></li>
+                <li><a href="../aluno/">Alunos</a></li>
+                <li><a href="../emprestimo/">Emprestimos</a></li>
+            </ul>
+            <button>Cadastrar</button>
+        </nav>
     </header>
     <main>
         <table>
@@ -51,11 +59,19 @@
                 <button>X</button>
             </div>
             <form>
+                <label for="id">Id</label>
                 <input type="number" placeholder="Id" name="id" disabled>
+                <label for="alunoRa">RA do Aluno</label>
                 <input type="text" placeholder="RA do Aluno" name="alunoRa" required>
+                <input type="text" name="aluno" disabled>
+                <label for="livroId">Id do Livro</label>
                 <input type="number" placeholder="Id do Livro" name="livroId" required>
+                <input type="text" name="livro" disabled>
+                <label for="retirada">Retirada</label>
                 <input type="datetime-local" placeholder="Retirada" name="retirada" required>
+                <label for="devolucao">Devolução</label>
                 <input type="datetime-local" placeholder="Devolução" name="devolucao">
+                <label for="multa">Multa</label>
                 <input type="number" step="0.02" placeholder="Multa" name="multa">
                 <button type="submit">Atualizar</button>
             </form>

@@ -29,6 +29,20 @@ const readOne = async (req, res) => {
 }
 
 const update = async (req, res) => {
+    const { retirada } =  await prisma.emprestimo.findUnique({
+        where: { id: Number(req.params.id) },
+        select: { retirada: true }
+    });
+    const {devolucao} = req.body;
+    if(devolucao){
+        const dataRetirada = new Date(retirada);
+        const dataDevolucao = new Date(devolucao);
+        const diferenca = Math.abs(dataDevolucao - dataRetirada);
+        const dias = Math.ceil(diferenca / (1000 * 60 * 60 * 24));
+        if(dias > 3){
+            req.body.multa = (dias - 3) * 10;
+        }
+    }
     try {
         const emprestimo = await prisma.emprestimo.update({
             data: req.body,
