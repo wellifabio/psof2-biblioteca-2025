@@ -1,8 +1,8 @@
 url = "http://localhost:3001";
 
 //Objetos tipo formulário do DOM
-const detalhes = document.querySelector("#detalhes form");
-const cadastro = document.querySelector("#cadastro form");
+const detalhes = document.querySelector("#det form");
+const cadastro = document.querySelector("#cad form");
 
 //Obter títulos da API
 fetch(url)
@@ -62,6 +62,7 @@ fetch(url + "/emprestimos")
 
 //Preencher o formulário de detalhes com os dados do emprestimo
 function showDetalhes(ra) {
+    det.classList.remove('oculto');
     fetch(url + '/emprestimos/' + ra)
         .then((res) => res.json())
         .then((dados) => {

@@ -5,14 +5,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Aguardando resposta da API</title>
+    <link rel="stylesheet" href="../style/style.css">
 </head>
 
 <body>
-    <section id="cadastro" class="modal oculto">
+    <section id="cad" class="modal oculto">
         <div class="janela">
             <div>
                 <h2>Cadastro de Aluno</h2>
-                <button>X</button>
+                <button onclick="window.location.reload()">X</button>
             </div>
             <form>
                 <input type="text" placeholder="RA" name="ra" required>
@@ -30,7 +31,7 @@
                 <li><a href="../aluno/">Alunos</a></li>
                 <li><a href="../emprestimo/">Emprestimos</a></li>
             </ul>
-            <button>Cadastrar</button>
+            <button onclick="cad.classList.remove('oculto')">Cadastrar</button>
         </nav>
     </header>
     <main>
@@ -51,11 +52,11 @@
         </table>
     </main>
     <footer>By Wellington e Paiva</footer>
-    <section id="detalhes" class="modal oculto">
+    <section id="det" class="modal oculto">
         <div class="janela">
             <div>
                 <h2>Detahes do Aluno</h2>
-                <button>X</button>
+                <button onclick="window.location.reload()">X</button>
             </div>
             <form>
                 <input type="text" placeholder="RA" name="ra" disabled>
